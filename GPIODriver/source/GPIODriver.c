@@ -78,7 +78,8 @@
  *  @param none
  *  @return void
  */
-int main(void) {
+int main(void)
+{
 
   	/* Init board hardware. */
     BOARD_InitBootPins();
@@ -87,11 +88,28 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
-    /* Enter an infinite loop, just incrementing a counter. */
-    while(1) {
-        i++ ;
-    }
-    return 0 ;
+    volatile uint32_t* pdwSCGC5 = (volatile uint32_t*)0x40048038;
+    volatile uint32_t* pdwGPIO_PDDR = (volatile uint32_t*)0x400FF054;
+    volatile uint32_t *pdwMUX = (volatile uint32_t*)0x4004A048;
+    volatile uint32_t* pdwPDOR = (volatile uint32_t*)0x400FF040;
+    uint32_t dwdelay = 0;
+
+
+      *pdwSCGC5 |= (1<<10);
+      *pdwMUX |= (1<<8);
+      *pdwGPIO_PDDR |= (1<<18);
+
+        while(1)
+        {
+        	dwdelay = 0x000F4240;
+
+        	while(dwdelay--)
+        	{
+
+        	}
+
+        	*pdwPDOR ^= (1<<18);
+
+        }
+        return 0 ;
 }

@@ -65,6 +65,14 @@
  *  @return
  */
 
+/*
+ * static void System_Clock_Gating (void)
+ * {
+ * 		volatile uint32_t* pdwSCGC5 = (volatile uint32_t*)0x40048038;
+ * 		*pdwSCGC5 |= (1<<10);
+ *
+ * }
+ */
 
 /****** Global Functions *******/
 
@@ -80,7 +88,6 @@
  */
 int main(void)
 {
-
   	/* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -88,7 +95,7 @@ int main(void)
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    volatile uint32_t* pdwSCGC5 = (volatile uint32_t*)0x40048038;
+    volatile uint32_t* pdwSCGC5 = (volatile uint32_t*)0x40048038; //función System Clock Gate
     volatile uint32_t* pdwGPIO_PDDR = (volatile uint32_t*)0x400FF054;
     volatile uint32_t *pdwMUX = (volatile uint32_t*)0x4004A048;
     volatile uint32_t* pdwPDOR = (volatile uint32_t*)0x400FF040;

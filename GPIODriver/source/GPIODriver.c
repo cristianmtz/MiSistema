@@ -32,6 +32,17 @@
  * @file    GPIODriver.c
  * @brief   Application entry point.
  */
+
+/********************************************************
+*	Author:			B.Chavoya							*
+*	File Name:		GPIODriver.c      					*
+*   Description:										*
+*   This file initializes all the KL27 pins     		*
+*   that are necessary to activate buttons, displays	*
+*	and the KL27 LED.									*										*
+********************************************************/
+
+/****** Include Section *******/
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
@@ -39,12 +50,33 @@
 #include "clock_config.h"
 #include "MKL27Z644.h"
 #include "fsl_debug_console.h"
-/* TODO: insert other include files here. */
 
-/* TODO: insert other definitions and declarations here. */
+/****** Global Variables *******/
 
-/*
- * @brief   Application entry point.
+
+/****** Local Variables *******/
+
+
+/****** Local Functions *******/
+
+/** @brief
+ *  @param
+ *  @param
+ *  @return
+ */
+
+
+/****** Global Functions *******/
+
+/** @brief
+ *  @param
+ *  @param
+ *  @return
+ */
+
+/** @brief main function
+ *  @param none
+ *  @return void
  */
 int main(void) {
 

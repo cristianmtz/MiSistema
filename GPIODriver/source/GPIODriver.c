@@ -67,7 +67,7 @@
   */
   static void SCGC5_Configuration (void)
   {
-	  volatile uint32_t *pdwSCGC5 = (volatile uint32_t*)0x40048038;
+	  volatile uint32_t *pdwSCGC5 = (volatile uint32_t*)SCGC5;
 	  *pdwSCGC5 |= (1<<10);
   }
 
@@ -78,26 +78,54 @@
   void Port_Data_Input_Registers (void)
   {
 	  /*BUTTON PDIR*/
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_1 = (volatile uint32_t*)0x400FF090; //PTC3
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_1 = (volatile uint32_t*); //PTC3
 	  *pdwGPIO_PDIR_BUTTON_1 |=(1<<3);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_2 = (volatile uint32_t*)0x400FF050; //PTB3
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_2 = (volatile uint32_t*); //PTB3
 	  *pdwGPIO_PDIR_BUTTON_2 |=(1<<3);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_3 = (volatile uint32_t*)0x400FF050; //PTB16
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_3 = (volatile uint32_t*); //PTB16
 	  *pdwGPIO_PDIR_BUTTON_3 |=(1<<16);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_4 = (volatile uint32_t*)0x400FF050; //PTB17
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_4 = (volatile uint32_t*); //PTB17
 	  *pdwGPIO_PDIR_BUTTON_4 |=(1<<17);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_5 = (volatile uint32_t*)0x400FF090; //PTC1
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_5 = (volatile uint32_t*); //PTC1
 	  *pdwGPIO_PDIR_BUTTON_5 |=(1<<1);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_6 = (volatile uint32_t*)0x400FF090; //PTC2
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_6 = (volatile uint32_t*); //PTC2
 	  *pdwGPIO_PDIR_BUTTON_6 |=(1<<2);
+
+
   }
 
  /** @brief This function sets all the Port Output Registers (not including the LED PDOR)
   *  @return void
   */
 
-  void Port_Output_Registers (void)
+  void Port_Data_Output_Registers (void)
   {
+	  /*display segments PDOR*/
+	  	  volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_1 = (volatile uint32_t*) ; //PTB2
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 |=(1<<1);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 |=(1<<2);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 |=(1<<3);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 |=(1<<4);
+	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
+	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 |=(1<<5);
+
+	      /*DISPLAYs PDOR*/
+	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_1 = (volatile uint32_t*); //PTC10
+	          *pdwGPIO_PDDR_DISPLAY_1 |= (1<<10);
+	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_2 = (volatile uint32_t*); //PTC11
+	          *pdwGPIO_PDDR_DISPLAY_2 |= (1<<11);
+	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_3 = (volatile uint32_t*); //PTE0
+	          *pdwGPIO_PDDR_DISPLAY_3 |= (1<<0);
+	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_4 = (volatile uint32_t*); //PTE1
+	          *pdwGPIO_PDDR_DISPLAY_4 |= (1<<1);
+
 
   }
 
@@ -110,70 +138,96 @@
   static void Pin_Configurations (void)
   {
 	/*LED CONFIG*/
-  	volatile uint32_t *pdwGPIO_PDDR_RED_LED = (volatile uint32_t*)0x400FF054;
-    volatile uint32_t *pdwMUX_RED_LED = (volatile uint32_t*)0x4004A048;
+  	volatile uint32_t *pdwGPIO_PDDR_RED_LED = (volatile uint32_t*);
+    volatile uint32_t *pdwMUX_RED_LED = (volatile uint32_t*);
     *pdwMUX_RED_LED |= (1<<8);
     *pdwGPIO_PDDR_RED_LED |= (1<<18);
 
 
     /*BUTTON PDDR*/
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_1 = (volatile uint32_t*)0x400FF094; //PTC3
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_1 = (volatile uint32_t*); //PTC3
     *pdwGPIO_PDDR_BUTTON_1 |=(1<<3);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_2 = (volatile uint32_t*)0x400FF054; //PTB3
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_2 = (volatile uint32_t*); //PTB3
     *pdwGPIO_PDDR_BUTTON_2 |=(1<<3);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_3 = (volatile uint32_t*)0x400FF054; //PTB16
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_3 = (volatile uint32_t*); //PTB16
     *pdwGPIO_PDDR_BUTTON_3 |=(1<<16);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_4 = (volatile uint32_t*)0x400FF054; //PTB17
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_4 = (volatile uint32_t*); //PTB17
     *pdwGPIO_PDDR_BUTTON_4 |=(1<<17);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_5 = (volatile uint32_t*)0x400FF094; //PTC1
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_5 = (volatile uint32_t*); //PTC1
     *pdwGPIO_PDDR_BUTTON_5 |=(1<<1);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_6 = (volatile uint32_t*)0x400FF094; //PTC2
+    volatile uint32_t *pdwGPIO_PDDR_BUTTON_6 = (volatile uint32_t*); //PTC2
     *pdwGPIO_PDDR_BUTTON_6 |=(1<<2);
 
-    /*BUTTON PCR
-    volatile uint32_t *pdwPE_BUTTON_1 = (volatile uint32_t*)0x4004B00C; //PTC3
-    *pdwPE_BUTTON_1 |=(1<<1);
-    volatile uint32_t *pdwPE_BUTTON_2 = (volatile uint32_t*)0x4004A00C; //PTB3
-    *pdwPE_BUTTON_2 |=(1<<1);
-    volatile uint32_t *pdwPE_BUTTON_3 = (volatile uint32_t*)0x4004A040; //PTB16
-    *pdwPE_BUTTON_3 |=(1<<1);
-    volatile uint32_t *pdwPE_BUTTON_4 = (volatile uint32_t*)0x4004A044; //PTB17
-    *pdwPE_BUTTON_4 |=(1<<1);
-    volatile uint32_t *pdwPE_BUTTON_5 = (volatile uint32_t*)0x4004B004; //PTC1
-    *pdwPE_BUTTON_5 |=(1<<1);
-    volatile uint32_t *pdwPE_BUTTON_6 = (volatile uint32_t*)0x4004B008; //PTC2
-    *pdwPE_BUTTON_6 |=(1<<1);
-    */
-
     /*DISPLAYS SEGMENTS PDDR*/
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 = (volatile uint32_t*)0x400FF054; //PTB2
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 = (volatile uint32_t*)0x400FF0D4; //PTD0
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 = (volatile uint32_t*)0x400FF0D4; //PTD1
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 |=(1<<1);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 = (volatile uint32_t*)0x400FF0D4; //PTD2
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 |=(1<<2);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 = (volatile uint32_t*)0x400FF0D4; //PTD3
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 |=(1<<3);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 = (volatile uint32_t*)0x400FF0D4; //PTD4
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 |=(1<<4);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 = (volatile uint32_t*)0x400FF0D4; //PTD5
-    *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 |=(1<<5);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 |=(1<<1);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 |=(1<<2);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 |=(1<<3);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 |=(1<<4);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
+       *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 |=(1<<5);
+
+
+       /*DISPLAY PDDR*/
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_1 = (volatile uint32_t*); //PTC10
+       *pdwGPIO_PDDR_DISPLAY_1 |= (1<<10);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_2 = (volatile uint32_t*); //PTC11
+       *pdwGPIO_PDDR_DISPLAY_2 |= (1<<11);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_3 = (volatile uint32_t*); //PTE0
+       *pdwGPIO_PDDR_DISPLAY_3 |= (1<<0);
+       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_4 = (volatile uint32_t*); //PTE1
+       *pdwGPIO_PDDR_DISPLAY_4 |= (1<<1);
+
+    /***************/
+    /***************/
+    /*BUTTON PCR*/
+    volatile uint32_t *pdwMUX_BUTTON_1 = (volatile uint32_t*); //PTC3
+    *pdwMUX_BUTTON_1 |=(1<<8);
+    volatile uint32_t *pdwMUX_BUTTON_2 = (volatile uint32_t*); //PTB3
+    *pdwMUX_BUTTON_2 |=(1<<8);
+    volatile uint32_t *pdwMUX_BUTTON_3 = (volatile uint32_t*); //PTB16
+    *pdwMUX_BUTTON_3 |=(1<<8);
+    volatile uint32_t *pdwMUX_BUTTON_4 = (volatile uint32_t*); //PTB17
+    *pdwMUX_BUTTON_4 |=(1<<8);
+    volatile uint32_t *pdwMUX_BUTTON_5 = (volatile uint32_t*); //PTC1
+    *pdwMUX_BUTTON_5 |=(1<<8);
+    volatile uint32_t *pdwMUX_BUTTON_6 = (volatile uint32_t*); //PTC2
+    *pdwMUX_BUTTON_6 |=(1<<8);
+
 
     /*DISPLAYS SEGMENTS PCR*/
+    	   volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
+    	   *pdwMUX_DISPLAY_SEGMENT_1 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
+           *pdwMUX_DISPLAY_SEGMENT_2 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
+           *pdwMUX_DISPLAY_SEGMENT_3 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
+           *pdwMUX_DISPLAY_SEGMENT_4 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
+           *pdwMUX_DISPLAY_SEGMENT_5 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
+           *pdwMUX_DISPLAY_SEGMENT_6 |=(1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
+           *pdwMUX_DISPLAY_SEGMENT_7 |=(1<<8);
 
-    /*DISPLAY PDDR*/
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_1 = (volatile uint32_t*)0x400FF094; //PTC10
-    *pdwGPIO_PDDR_DISPLAY_1 |= (1<<10);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_2 = (volatile uint32_t*)0x400FF094; //PTC11
-    *pdwGPIO_PDDR_DISPLAY_2 |= (1<<11);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_3 = (volatile uint32_t*)0x400FF114; //PTE0
-    *pdwGPIO_PDDR_DISPLAY_3 |= (1<<0);
-    volatile uint32_t *pdwGPIO_PDDR_DISPLAY_4 = (volatile uint32_t*)0x400FF114; //PTE1
-    *pdwGPIO_PDDR_DISPLAY_4 |= (1<<1);
 
     /*DISPLAY PCR*/
+           volatile uint32_t *pdwMUX_DISPLAY_1 = (volatile uint32_t*); //PTC10
+           *pdwMUX_DISPLAY_1 |= (1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_2 = (volatile uint32_t*); //PTC11
+           *pdwMUX_DISPLAY_2 |= (1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_3 = (volatile uint32_t*); //PTE0
+           *pdwMUX_DISPLAY_3 |= (1<<8);
+           volatile uint32_t *pdwMUX_DISPLAY_4 = (volatile uint32_t*); //PTE1
+           *pdwMUX_DISPLAY_4 |= (1<<8);
   }
 
 
@@ -195,7 +249,7 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
-    volatile uint32_t* pdwPDOR_RED_LED = (volatile uint32_t*)0x400FF040;
+    volatile uint32_t* pdwPDOR_RED_LED = (volatile uint32_t*);
     uint32_t dwdelay = 0;
 
       SCGC5_Configuration();

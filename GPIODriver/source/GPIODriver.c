@@ -34,7 +34,7 @@
  */
 
 /********************************************************
-*	Author:			B.Chavoya							*
+*	Author:			B.Chavoya, C.Martinez				*
 *	File Name:		GPIODriver.c      					*
 *   Description:										*
 *   This file initializes all the KL27 pins     		*
@@ -72,13 +72,33 @@
   }
 
 
+  /** @brief This function sets all the Port Data Input Registers
+   *  @return void
+   *  */
+  void Port_Data_Input_Registers (void)
+  {
+	  /*BUTTON PDIR*/
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_1 = (volatile uint32_t*)0x400FF090; //PTC3
+	  *pdwGPIO_PDIR_BUTTON_1 |=(1<<3);
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_2 = (volatile uint32_t*)0x400FF050; //PTB3
+	  *pdwGPIO_PDIR_BUTTON_2 |=(1<<3);
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_3 = (volatile uint32_t*)0x400FF050; //PTB16
+	  *pdwGPIO_PDIR_BUTTON_3 |=(1<<16);
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_4 = (volatile uint32_t*)0x400FF050; //PTB17
+	  *pdwGPIO_PDIR_BUTTON_4 |=(1<<17);
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_5 = (volatile uint32_t*)0x400FF090; //PTC1
+	  *pdwGPIO_PDIR_BUTTON_5 |=(1<<1);
+	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_6 = (volatile uint32_t*)0x400FF090; //PTC2
+	  *pdwGPIO_PDIR_BUTTON_6 |=(1<<2);
+  }
+
  /** @brief This function sets all the Port Output Registers (not including the LED PDOR)
   *  @return void
   */
 
   void Port_Output_Registers (void)
   {
-	/*BUTTON PDOR*/
+	/*BUTTON PDOR
 	  volatile uint32_t *pdwGPIO_PDOR_BUTTON_1 = (volatile uint32_t*)0x400FF080; //PTC3
 	  *pdwGPIO_PDOR_BUTTON_1 |=(1<<3);
 	  volatile uint32_t *pdwGPIO_PDOR_BUTTON_2 = (volatile uint32_t*)0x400FF040; //PTB3
@@ -91,7 +111,7 @@
 	  *pdwGPIO_PDOR_BUTTON_5 |=(1<<1);
 	  volatile uint32_t *pdwGPIO_PDOR_BUTTON_6 = (volatile uint32_t*)0x400FF080; //PTC2
 	  *pdwGPIO_PDOR_BUTTON_6 |=(1<<2);
-
+	*/
   }
 
 

@@ -39,7 +39,7 @@
 *   Description:										*
 *   This file initializes all the KL27 pins     		*
 *   that are necessary to activate buttons, displays	*
-*	and the KL27 LED.									*										*
+*	and the KL27 LED.									*
 ********************************************************/
 
 /****** Include Section *******/
@@ -67,8 +67,9 @@
   */
   static void SCGC5_Configuration (void)
   {
-	  volatile uint32_t *pdwSCGC5 = (volatile uint32_t*)SCGC5;
-	  *pdwSCGC5 |= (1<<10);
+	  /*volatile uint32_t *pdwSCGC5 = (volatile uint32_t*)SCGC5;
+	  *pdwSCGC5 |= (1<<10);*/
+	  SIM->SCGC5 |= (1 << 10); //Equivalencia
   }
 
 
@@ -91,6 +92,9 @@
 	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_6 = (volatile uint32_t*); //PTC2
 	  *pdwGPIO_PDIR_BUTTON_6 |=(1<<2);
 
+	  /*BUTTON PDIR*/
+
+
 
   }
 
@@ -101,7 +105,7 @@
   void Port_Data_Output_Registers (void)
   {
 	  /*display segments PDOR*/
-	  	  volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_1 = (volatile uint32_t*) ; //PTB2
+	  	  volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
 	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
 	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
 	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
@@ -202,6 +206,16 @@
     *pdwMUX_BUTTON_6 |=(1<<8);
 
 
+    ////////////////////////////////////
+    PORTC->PCR[3] = PORT_PCR_MUX(1);	//PTC3
+    PORTB->PCR[3] = PORT_PCR_MUX(1);	//PTB3
+    PORTB->PCR[16] = PORT_PCR_MUX(1);	//PTB16
+    PORTB->PCR[17] = PORT_PCR_MUX(1);	//PTB17
+    PORTC->PCR[1] = PORT_PCR_MUX(1);	//PTC1
+    PORTC->PCR[2] = PORT_PCR_MUX(1);	//PTC2
+
+
+
     /*DISPLAYS SEGMENTS PCR*/
     	   volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
     	   *pdwMUX_DISPLAY_SEGMENT_1 |=(1<<8);
@@ -218,6 +232,17 @@
            volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
            *pdwMUX_DISPLAY_SEGMENT_7 |=(1<<8);
 
+           ////////////////////////////////
+           ////////////////////////////////////
+           PORTB->PCR[2] = PORT_PCR_MUX(1);		//PTB2
+           PORTD->PCR[0] = PORT_PCR_MUX(1);		//PTD0
+           PORTD->PCR[1] = PORT_PCR_MUX(1);		//PTD1
+           PORTD->PCR[2] = PORT_PCR_MUX(1);		//PTD2
+           PORTD->PCR[3] = PORT_PCR_MUX(1);		//PTD3
+           PORTD->PCR[4] = PORT_PCR_MUX(1);		//PTD4
+           PORTD->PCR[5] = PORT_PCR_MUX(1);		//PTD4
+
+
 
     /*DISPLAY PCR*/
            volatile uint32_t *pdwMUX_DISPLAY_1 = (volatile uint32_t*); //PTC10
@@ -228,6 +253,17 @@
            *pdwMUX_DISPLAY_3 |= (1<<8);
            volatile uint32_t *pdwMUX_DISPLAY_4 = (volatile uint32_t*); //PTE1
            *pdwMUX_DISPLAY_4 |= (1<<8);
+
+           ///////////////////////////
+           ///////////////////////////
+
+           ////////////////////////////////
+           ////////////////////////////////////
+           PORTC->PCR[10] = PORT_PCR_MUX(1);		//PTC10
+           PORTC->PCR[11] = PORT_PCR_MUX(1);	    //PTC11
+           PORTE->PCR[0] = PORT_PCR_MUX(1);		    //PTE0
+           PORTE->PCR[1] = PORT_PCR_MUX(1);		    //PTE1
+
   }
 
 

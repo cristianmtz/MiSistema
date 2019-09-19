@@ -171,6 +171,15 @@ void Port_Init_Configuration_LED (void)
 	    PORTC->PCR[1] = PORT_PCR_MUX(1);	//PTC1
 	    PORTC->PCR[2] = PORT_PCR_MUX(1);	//PTC2
 
+           ////////////////////////////////
+           ////////////////////////////////////
+           PORTB->PCR[2] = PORT_PCR_MUX(1);		//PTB2
+           PORTD->PCR[0] = PORT_PCR_MUX(1);		//PTD0
+           PORTD->PCR[1] = PORT_PCR_MUX(1);		//PTD1
+           PORTD->PCR[2] = PORT_PCR_MUX(1);		//PTD2
+           PORTD->PCR[3] = PORT_PCR_MUX(1);		//PTD3
+           PORTD->PCR[4] = PORT_PCR_MUX(1);		//PTD4
+           PORTD->PCR[5] = PORT_PCR_MUX(1);		//PTD4
 
 
 	    /*DISPLAYS SEGMENTS PCR*/

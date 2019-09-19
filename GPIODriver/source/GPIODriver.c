@@ -85,27 +85,7 @@ void Port_Init_Configuration_LED (void)
    */
   void Port_Init_Configuration (void)
   {
-		/*LED CONFIG*/
-	  /*
-	    SIM->SCGC5 |= (1 << 10); //SYSTEM CLOCK GATE 5
-		GPIOB->PDDR = (1<<18); //PTB18
-		PORTB->PCR[18] = PORT_PCR_MUX(1);	//PTB18
-
-	    GPIOB->PDOR = (1<<18); //PTB18
-	  */
-
-
-	    ///////////////////////////////////////////
-	    ///////////PDIR///////////////////////////
-	    ///////////////////////////////////////////
-	    /*BUTTON PDIR*/
-
-	    /*GPIOC->PDIR |= (1<<3); //PTC3
-	    GPIOB->PDIR |= (1<<3); //PTB3
-	    GPIOB->PDIR |= (1<<16); //PTB16
-	    GPIOC->PDIR |= (1<<17); //PTB17
-	    GPIOC->PDIR |= (1<<1); //PTC1
-	    GPIOC->PDIR |= (1<<2); //PTC2*/
+	    GPIOC->PDIR &= (1<<5);
 
 
 
@@ -171,15 +151,6 @@ void Port_Init_Configuration_LED (void)
 	    PORTC->PCR[1] = PORT_PCR_MUX(1);	//PTC1
 	    PORTC->PCR[2] = PORT_PCR_MUX(1);	//PTC2
 
-           ////////////////////////////////
-           ////////////////////////////////////
-           PORTB->PCR[2] = PORT_PCR_MUX(1);		//PTB2
-           PORTD->PCR[0] = PORT_PCR_MUX(1);		//PTD0
-           PORTD->PCR[1] = PORT_PCR_MUX(1);		//PTD1
-           PORTD->PCR[2] = PORT_PCR_MUX(1);		//PTD2
-           PORTD->PCR[3] = PORT_PCR_MUX(1);		//PTD3
-           PORTD->PCR[4] = PORT_PCR_MUX(1);		//PTD4
-           PORTD->PCR[5] = PORT_PCR_MUX(1);		//PTD4
 
 
 	    /*DISPLAYS SEGMENTS PCR*/
@@ -199,14 +170,7 @@ void Port_Init_Configuration_LED (void)
 
   }
 
-/* PARTE PAUL
-
-#define INIT_STRUCT 			\
-{								\
-	{enPORTCPIN3, GPIOC->PDOR, 1}, 	\
-	{enPORTAPIN5, GPIOA->PDOR, 1}	\
-}
-
+/* PARTE PAUL*/
   typedef enum
   {
 	  enPORTBPIN2 = 0,
@@ -230,28 +194,30 @@ void Port_Init_Configuration_LED (void)
   }tenMyPins;
 
 
-
  typedef struct
  {
 	 tenMyPins enMyPin;
-	 uint32_t *pu32Address;
-	 uint8 u8InputOrOutput;
+	 uint32_t  *pu32Address;
+	 uint8_t   u8InputOrOutput;
  }tstMyPins;
 
- tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
 
-  void Output ( uint8 u8Output, tenMyPins enCurrentPin )
+tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
+
+
+
+  void Output ( uint8_t u8Output, tenMyPins enCurrentPin )
   {
-	  if( u8Output == 1 && stMyPinsConfig[enCurrentPin].u8InputOrOutput == 1)
+	  if( u8Output == 1 		&& 		stMyPinsConfig[enCurrentPin].u8InputOrOutput == 1)
 	  {
-		  stMyPinsConfig[enCurrentPin].pu32Address |= (1 << stMyPinsConfig[enCurrentPin].enMyPin);
-		  /*GPIOA->PDOR*/
-  /*}
+		  *stMyPinsConfig[enCurrentPin].pu32Address |= (1 << stMyPinsConfig[enCurrentPin].enMyPin);
+		  //GPIOA->PDOR//
+	  }
 	  else
 	  {
-		  u8Port &= ~(1 << u8Pin);
+		  //u8Port &= ~(1 << u8Pin);
 	  }
-  }*/
+  }
 
   /* PARTE PAUL*/
 
@@ -276,9 +242,9 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
-    uint32_t dwdelay = 0;
     Port_Init_Configuration_LED();
     // Port_Init_Configuration();
+    	uint32_t dwdelay = 0;
 
         while(1)
         {

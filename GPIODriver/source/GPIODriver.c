@@ -51,6 +51,8 @@
 #include "MKL27Z644.h"
 #include "fsl_debug_console.h"
 
+#include "GPIODriver.h"
+
 /****** Global Variables *******/
 
 
@@ -62,209 +64,187 @@
 
 /****** Local Functions *******/
 
-/** @brief This function is to configure System Clock Gate 5
-  *  @return void
-  */
-  static void SCGC5_Configuration (void)
+void Port_Init_Configuration_LED (void)
   {
-	  /*volatile uint32_t *pdwSCGC5 = (volatile uint32_t*)SCGC5;
-	  *pdwSCGC5 |= (1<<10);*/
-	  SIM->SCGC5 |= (1 << 10); //Equivalencia
+    SIM->SCGC5 |= (1 << 10); //SYSTEM CLOCK GATE 5
+	GPIOB->PDDR = (1<<18); //PTB18
+	PORTB->PCR[18] = PORT_PCR_MUX(1);	//PTB18
+	GPIOB->PDOR = (1<<18); //PTB18
+
   }
 
 
-  /** @brief This function sets all the Port Data Input Registers
+
+
+  /** @brief
+   *
+   *  This function sets all the Port Data Input Registers, Port Output Registers, Port Data Direction Registers,
+   *  System Clock Gate and the Port Control registers of all GPIOS
+   *
    *  @return void
-   *  */
-  void Port_Data_Input_Registers (void)
+   */
+  void Port_Init_Configuration (void)
   {
-	  /*BUTTON PDIR*/
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_1 = (volatile uint32_t*); //PTC3
-	  *pdwGPIO_PDIR_BUTTON_1 |=(1<<3);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_2 = (volatile uint32_t*); //PTB3
-	  *pdwGPIO_PDIR_BUTTON_2 |=(1<<3);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_3 = (volatile uint32_t*); //PTB16
-	  *pdwGPIO_PDIR_BUTTON_3 |=(1<<16);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_4 = (volatile uint32_t*); //PTB17
-	  *pdwGPIO_PDIR_BUTTON_4 |=(1<<17);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_5 = (volatile uint32_t*); //PTC1
-	  *pdwGPIO_PDIR_BUTTON_5 |=(1<<1);
-	  volatile uint32_t *pdwGPIO_PDIR_BUTTON_6 = (volatile uint32_t*); //PTC2
-	  *pdwGPIO_PDIR_BUTTON_6 |=(1<<2);
+		/*LED CONFIG*/
+	  /*
+	    SIM->SCGC5 |= (1 << 10); //SYSTEM CLOCK GATE 5
+		GPIOB->PDDR = (1<<18); //PTB18
+		PORTB->PCR[18] = PORT_PCR_MUX(1);	//PTB18
 
-	  /*BUTTON PDIR*/
+	    GPIOB->PDOR = (1<<18); //PTB18
+	  */
 
 
+	    ///////////////////////////////////////////
+	    ///////////PDIR///////////////////////////
+	    ///////////////////////////////////////////
+	    /*BUTTON PDIR*/
+
+	    /*GPIOC->PDIR |= (1<<3); //PTC3
+	    GPIOB->PDIR |= (1<<3); //PTB3
+	    GPIOB->PDIR |= (1<<16); //PTB16
+	    GPIOC->PDIR |= (1<<17); //PTB17
+	    GPIOC->PDIR |= (1<<1); //PTC1
+	    GPIOC->PDIR |= (1<<2); //PTC2*/
+
+
+
+	    ///////////////////////////////////////////
+	    ///////////PDOR///////////////////////////
+	    ///////////////////////////////////////////
+	    /*DISPLAYS SEGMENTS PDOR*/
+	    GPIOB->PDOR = (1<<3); //PTB2
+	    GPIOD->PDOR = (1<<0); //PTD0
+	    GPIOD->PDOR = (1<<1); //PTD1
+	    GPIOD->PDOR = (1<<2); //PTD2
+	    GPIOD->PDOR = (1<<3); //PTD3
+	    GPIOD->PDOR = (1<<4); //PTD4
+	    GPIOD->PDOR = (1<<5); //PTD5
+
+	    /*DISPLAY PDOR*/
+	    GPIOC->PDOR = (1<<10); //PTC10
+	    GPIOC->PDOR = (1<<11); //PTC11
+	    GPIOE->PDOR = (1<<0); //PTE0
+	    GPIOE->PDOR = (1<<1); //PTE1
+
+
+
+	    ///////////////////////////////////////////
+	    ///////////PDDR///////////////////////////
+	    ///////////////////////////////////////////
+	    /*BUTTON PDDR*/
+	    GPIOC->PDDR = (1<<3); //PTC3
+	    GPIOB->PDDR = (1<<3); //PTB3
+	    GPIOB->PDDR = (1<<16); //PTB16
+	    GPIOC->PDDR = (1<<17); //PTB17
+	    GPIOC->PDDR = (1<<1); //PTC1
+	    GPIOC->PDDR = (1<<2); //PTC2
+
+
+	    /*DISPLAYS SEGMENTS PDDR*/
+	    GPIOB->PDDR = (1<<3); //PTB2
+	    GPIOD->PDDR = (1<<0); //PTD0
+	    GPIOD->PDDR = (1<<1); //PTD1
+	    GPIOD->PDDR = (1<<2); //PTD2
+	    GPIOD->PDDR = (1<<3); //PTD3
+	    GPIOD->PDDR = (1<<4); //PTD4
+	    GPIOD->PDDR = (1<<5); //PTD5
+
+
+
+	    /*DISPLAY PDDR*/
+	    GPIOC->PDDR = (1<<10); //PTC10
+	    GPIOC->PDDR = (1<<11); //PTC11
+	    GPIOE->PDDR = (1<<0); //PTE0
+	    GPIOE->PDDR = (1<<1); //PTE1
+
+
+
+	    ///////////////////////////////////////////
+	    ///////////PCR///////////////////////////
+	    ///////////////////////////////////////////
+	    /*BUTTON PCR*/
+	    PORTC->PCR[3] = PORT_PCR_MUX(1);	//PTC3
+	    PORTB->PCR[3] = PORT_PCR_MUX(1);	//PTB3
+	    PORTB->PCR[16] = PORT_PCR_MUX(1);	//PTB16
+	    PORTB->PCR[17] = PORT_PCR_MUX(1);	//PTB17
+	    PORTC->PCR[1] = PORT_PCR_MUX(1);	//PTC1
+	    PORTC->PCR[2] = PORT_PCR_MUX(1);	//PTC2
+
+
+
+	    /*DISPLAYS SEGMENTS PCR*/
+	     PORTB->PCR[2] = PORT_PCR_MUX(1);		//PTB2
+	     PORTD->PCR[0] = PORT_PCR_MUX(1);		//PTD0
+	     PORTD->PCR[1] = PORT_PCR_MUX(1);		//PTD1
+	     PORTD->PCR[2] = PORT_PCR_MUX(1);		//PTD2
+	     PORTD->PCR[3] = PORT_PCR_MUX(1);		//PTD3
+	     PORTD->PCR[4] = PORT_PCR_MUX(1);		//PTD4
+	     PORTD->PCR[5] = PORT_PCR_MUX(1);		//PTD4
+
+	     /*DISPLAY PCR*/
+	     PORTC->PCR[10] = PORT_PCR_MUX(1);		//PTC10
+	     PORTC->PCR[11] = PORT_PCR_MUX(1);	    //PTC11
+	     PORTE->PCR[0] = PORT_PCR_MUX(1);		//PTE0
+	     PORTE->PCR[1] = PORT_PCR_MUX(1);		//PTE1
 
   }
 
- /** @brief This function sets all the Port Output Registers (not including the LED PDOR)
-  *  @return void
-  */
+/* PARTE PAUL
 
-  void Port_Data_Output_Registers (void)
+#define INIT_STRUCT 			\
+{								\
+	{enPORTCPIN3, GPIOC->PDOR, 1}, 	\
+	{enPORTAPIN5, GPIOA->PDOR, 1}	\
+}
+
+  typedef enum
   {
-	  /*display segments PDOR*/
-	  	  volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 |=(1<<1);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 |=(1<<2);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 |=(1<<3);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 |=(1<<4);
-	      volatile uint32_t *pdwGPIO_PDOR_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
-	      *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 |=(1<<5);
-
-	      /*DISPLAYs PDOR*/
-	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_1 = (volatile uint32_t*); //PTC10
-	          *pdwGPIO_PDDR_DISPLAY_1 |= (1<<10);
-	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_2 = (volatile uint32_t*); //PTC11
-	          *pdwGPIO_PDDR_DISPLAY_2 |= (1<<11);
-	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_3 = (volatile uint32_t*); //PTE0
-	          *pdwGPIO_PDDR_DISPLAY_3 |= (1<<0);
-	          volatile uint32_t *pdwGPIO_PDOR_DISPLAY_4 = (volatile uint32_t*); //PTE1
-	          *pdwGPIO_PDDR_DISPLAY_4 |= (1<<1);
-
-
-  }
+	  enPORTBPIN2 = 0,
+	  enPORTBPIN3,
+	  enPORTBPIN16,
+	  enPORTBPIN17,
+	  enPORTCPIN1,
+	  enPORTCPIN2,
+	  enPORTCPIN3,
+	  enPORTCPIN10,
+	  enPORTCPIN11,
+	  enPORTDPIN0,
+	  enPORTDPIN1,
+	  enPORTDPIN2,
+	  enPORTDPIN3,
+	  enPORTDPIN4,
+	  enPORTDPIN5,
+	  enPORTEPIN0,
+	  enPORTEPIN1,
+	  enTotalPins
+  }tenMyPins;
 
 
 
+ typedef struct
+ {
+	 tenMyPins enMyPin;
+	 uint32_t *pu32Address;
+	 uint8 u8InputOrOutput;
+ }tstMyPins;
 
- /** @brief his function is to configure the pins (PCR, PDDR)
-  *  @return void
-  */
-  static void Pin_Configurations (void)
+ tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
+
+  void Output ( uint8 u8Output, tenMyPins enCurrentPin )
   {
-	/*LED CONFIG*/
-  	volatile uint32_t *pdwGPIO_PDDR_RED_LED = (volatile uint32_t*);
-    volatile uint32_t *pdwMUX_RED_LED = (volatile uint32_t*);
-    *pdwMUX_RED_LED |= (1<<8);
-    *pdwGPIO_PDDR_RED_LED |= (1<<18);
+	  if( u8Output == 1 && stMyPinsConfig[enCurrentPin].u8InputOrOutput == 1)
+	  {
+		  stMyPinsConfig[enCurrentPin].pu32Address |= (1 << stMyPinsConfig[enCurrentPin].enMyPin);
+		  /*GPIOA->PDOR*/
+  /*}
+	  else
+	  {
+		  u8Port &= ~(1 << u8Pin);
+	  }
+  }*/
 
-
-    /*BUTTON PDDR*/
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_1 = (volatile uint32_t*); //PTC3
-    *pdwGPIO_PDDR_BUTTON_1 |=(1<<3);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_2 = (volatile uint32_t*); //PTB3
-    *pdwGPIO_PDDR_BUTTON_2 |=(1<<3);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_3 = (volatile uint32_t*); //PTB16
-    *pdwGPIO_PDDR_BUTTON_3 |=(1<<16);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_4 = (volatile uint32_t*); //PTB17
-    *pdwGPIO_PDDR_BUTTON_4 |=(1<<17);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_5 = (volatile uint32_t*); //PTC1
-    *pdwGPIO_PDDR_BUTTON_5 |=(1<<1);
-    volatile uint32_t *pdwGPIO_PDDR_BUTTON_6 = (volatile uint32_t*); //PTC2
-    *pdwGPIO_PDDR_BUTTON_6 |=(1<<2);
-
-    /*DISPLAYS SEGMENTS PDDR*/
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_1 |=(1<<2);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_2 |=(1<<0);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_3 |=(1<<1);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_4 |=(1<<2);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_5 |=(1<<3);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_6 |=(1<<4);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
-       *pdwGPIO_PDDR_DISPLAY_SEGMENT_7 |=(1<<5);
-
-
-       /*DISPLAY PDDR*/
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_1 = (volatile uint32_t*); //PTC10
-       *pdwGPIO_PDDR_DISPLAY_1 |= (1<<10);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_2 = (volatile uint32_t*); //PTC11
-       *pdwGPIO_PDDR_DISPLAY_2 |= (1<<11);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_3 = (volatile uint32_t*); //PTE0
-       *pdwGPIO_PDDR_DISPLAY_3 |= (1<<0);
-       volatile uint32_t *pdwGPIO_PDDR_DISPLAY_4 = (volatile uint32_t*); //PTE1
-       *pdwGPIO_PDDR_DISPLAY_4 |= (1<<1);
-
-    /***************/
-    /***************/
-    /*BUTTON PCR*/
-    volatile uint32_t *pdwMUX_BUTTON_1 = (volatile uint32_t*); //PTC3
-    *pdwMUX_BUTTON_1 |=(1<<8);
-    volatile uint32_t *pdwMUX_BUTTON_2 = (volatile uint32_t*); //PTB3
-    *pdwMUX_BUTTON_2 |=(1<<8);
-    volatile uint32_t *pdwMUX_BUTTON_3 = (volatile uint32_t*); //PTB16
-    *pdwMUX_BUTTON_3 |=(1<<8);
-    volatile uint32_t *pdwMUX_BUTTON_4 = (volatile uint32_t*); //PTB17
-    *pdwMUX_BUTTON_4 |=(1<<8);
-    volatile uint32_t *pdwMUX_BUTTON_5 = (volatile uint32_t*); //PTC1
-    *pdwMUX_BUTTON_5 |=(1<<8);
-    volatile uint32_t *pdwMUX_BUTTON_6 = (volatile uint32_t*); //PTC2
-    *pdwMUX_BUTTON_6 |=(1<<8);
-
-
-    ////////////////////////////////////
-    PORTC->PCR[3] = PORT_PCR_MUX(1);	//PTC3
-    PORTB->PCR[3] = PORT_PCR_MUX(1);	//PTB3
-    PORTB->PCR[16] = PORT_PCR_MUX(1);	//PTB16
-    PORTB->PCR[17] = PORT_PCR_MUX(1);	//PTB17
-    PORTC->PCR[1] = PORT_PCR_MUX(1);	//PTC1
-    PORTC->PCR[2] = PORT_PCR_MUX(1);	//PTC2
-
-
-
-    /*DISPLAYS SEGMENTS PCR*/
-    	   volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_1 = (volatile uint32_t*); //PTB2
-    	   *pdwMUX_DISPLAY_SEGMENT_1 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_2 = (volatile uint32_t*); //PTD0
-           *pdwMUX_DISPLAY_SEGMENT_2 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_3 = (volatile uint32_t*); //PTD1
-           *pdwMUX_DISPLAY_SEGMENT_3 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_4 = (volatile uint32_t*); //PTD2
-           *pdwMUX_DISPLAY_SEGMENT_4 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_5 = (volatile uint32_t*); //PTD3
-           *pdwMUX_DISPLAY_SEGMENT_5 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_6 = (volatile uint32_t*); //PTD4
-           *pdwMUX_DISPLAY_SEGMENT_6 |=(1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_SEGMENT_7 = (volatile uint32_t*); //PTD5
-           *pdwMUX_DISPLAY_SEGMENT_7 |=(1<<8);
-
-           ////////////////////////////////
-           ////////////////////////////////////
-           PORTB->PCR[2] = PORT_PCR_MUX(1);		//PTB2
-           PORTD->PCR[0] = PORT_PCR_MUX(1);		//PTD0
-           PORTD->PCR[1] = PORT_PCR_MUX(1);		//PTD1
-           PORTD->PCR[2] = PORT_PCR_MUX(1);		//PTD2
-           PORTD->PCR[3] = PORT_PCR_MUX(1);		//PTD3
-           PORTD->PCR[4] = PORT_PCR_MUX(1);		//PTD4
-           PORTD->PCR[5] = PORT_PCR_MUX(1);		//PTD4
-
-
-
-    /*DISPLAY PCR*/
-           volatile uint32_t *pdwMUX_DISPLAY_1 = (volatile uint32_t*); //PTC10
-           *pdwMUX_DISPLAY_1 |= (1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_2 = (volatile uint32_t*); //PTC11
-           *pdwMUX_DISPLAY_2 |= (1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_3 = (volatile uint32_t*); //PTE0
-           *pdwMUX_DISPLAY_3 |= (1<<8);
-           volatile uint32_t *pdwMUX_DISPLAY_4 = (volatile uint32_t*); //PTE1
-           *pdwMUX_DISPLAY_4 |= (1<<8);
-
-           ///////////////////////////
-           ///////////////////////////
-
-           ////////////////////////////////
-           ////////////////////////////////////
-           PORTC->PCR[10] = PORT_PCR_MUX(1);		//PTC10
-           PORTC->PCR[11] = PORT_PCR_MUX(1);	    //PTC11
-           PORTE->PCR[0] = PORT_PCR_MUX(1);		    //PTE0
-           PORTE->PCR[1] = PORT_PCR_MUX(1);		    //PTE1
-
-  }
+  /* PARTE PAUL*/
 
 
 /****** Global Functions *******/
@@ -279,29 +259,28 @@
  *  @param none
  *  @return void
  */
+
+
 int main(void)
 {
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
-    volatile uint32_t* pdwPDOR_RED_LED = (volatile uint32_t*);
     uint32_t dwdelay = 0;
-
-      SCGC5_Configuration();
-      Pin_Configurations();
-      //Port_Output_Registers();
+    Port_Init_Configuration_LED();
+    // Port_Init_Configuration();
 
         while(1)
         {
-        	dwdelay = 0x000F4240;
+        	dwdelay = LED_TOGGLE_TIME;
 
         	while(dwdelay--)
         	{
 
         	}
-        	*pdwPDOR_RED_LED ^= (1<<18);
+        	GPIOB->PTOR = (1<<18); //PTB18
 
         }
-        return 0 ;
+        return 0;
 }

@@ -54,21 +54,27 @@
 #include "GPIODriver.h"
 
 /****** Global Variables *******/
+
+
 /****** Local Variables *******/
+
+
+
+
 
 /****** Local Functions *******/
 
+/****** Global Functions *******/
 
-/** @brief main function
- *  @param none
- *  @return void
- */
+/** @brief
+  *
+  *  This function allows toggles a LED every 1 sec to verify the correct
+  *  performance of the project
+  *  @return void
+  */
 int main(void)
 {
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
-    BOARD_InitDebugConsole();
+
     Port_Init_Configuration();
     //Port_Init_Configuration_LED();
 
@@ -82,7 +88,10 @@ int main(void)
         	{
 
         	}
-        	GPIOB->PTOR = (1<<18); //PTB18
+        	/*ACA se llamará la funcion de output*/
+        	//Output ( uint8_t u8Output, tenMyPins enCurrentPin )
+
+        	//GPIOB->PTOR = (1<<18); //PTB18
 
         }
         return 0;

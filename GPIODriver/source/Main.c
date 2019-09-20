@@ -70,7 +70,6 @@ void Port_Init_Configuration_LED (void)
 	GPIOB->PDDR = (1<<18); //PTB18
 	PORTB->PCR[18] = PORT_PCR_MUX(1);	//PTB18
 	GPIOB->PDOR = (1<<18); //PTB18
-
   }
 
 
@@ -85,10 +84,6 @@ void Port_Init_Configuration_LED (void)
    */
   void Port_Init_Configuration (void)
   {
-	    GPIOC->PDIR &= (1<<5);
-
-
-
 	    ///////////////////////////////////////////
 	    ///////////PDOR///////////////////////////
 	    ///////////////////////////////////////////
@@ -202,10 +197,10 @@ void Port_Init_Configuration_LED (void)
  }tstMyPins;
 
 
-tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
+//tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
 
 
-
+/*
   void Output ( uint8_t u8Output, tenMyPins enCurrentPin )
   {
 	  if( u8Output == 1 		&& 		stMyPinsConfig[enCurrentPin].u8InputOrOutput == 1)
@@ -217,7 +212,7 @@ tstMyPins stMyPinsConfig[enTotalPins] = INIT_STRUCT;
 	  {
 		  //u8Port &= ~(1 << u8Pin);
 	  }
-  }
+  } */
 
   /* PARTE PAUL*/
 
@@ -242,8 +237,9 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
-    Port_Init_Configuration_LED();
-    // Port_Init_Configuration();
+    Port_Init_Configuration();
+    //Port_Init_Configuration_LED();
+
     	uint32_t dwdelay = 0;
 
         while(1)
